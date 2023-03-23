@@ -505,8 +505,6 @@ GameObject:
   - component: {fileID: 1404366831}
   - component: {fileID: 1404366833}
   - component: {fileID: 1404366832}
-  - component: {fileID: 1404366837}
-  - component: {fileID: 1404366836}
   - component: {fileID: 1404366835}
   - component: {fileID: 1404366834}
   m_Layer: 0
@@ -568,8 +566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <controller>k__BackingField: {fileID: 1404366832}
-  <interactor>k__BackingField: {fileID: 1404366837}
-  <inventory>k__BackingField: {fileID: 1404366836}
+  <inventory>k__BackingField: {fileID: 0}
 --- !u!50 &1404366834
 Rigidbody2D:
   serializedVersion: 4
@@ -607,33 +604,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &1404366836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1404366830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8034c3c3988162449b881b80a86e383, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1404366837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1404366830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89d51cf58f0abfe48b15bd0d0d12f3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionRadius: 3
-  baseAttackDamage: 5
-  baseMinePower: 5
 --- !u!1 &2028610117
 GameObject:
   m_ObjectHideFlags: 0
