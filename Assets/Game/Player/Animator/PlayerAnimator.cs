@@ -10,7 +10,8 @@ public class PlayerAnimator : MonoBehaviour
     private SpriteRenderer SR;
     private AnimationSO currentAnimation;
     private Timer timer;
-    
+    private bool stopFlag = false;
+
     private void Start()
     {
         timer = new Timer();
@@ -50,11 +51,14 @@ public class PlayerAnimator : MonoBehaviour
         SR.sprite = myanim.Frames[currentframe];
         while (!timer.Execute())
         {
-            if (myanim != currentAnimation) return;
+            if (myanim != currentAnimation || stopFlag) return;
             await Task.Yield();
         }
         currentframe++;
         currentframe %= currentAnimation.Frames.Count;
         FrameSetter(myanim, currentframe);
+    }
+    private void OnApplicationQuit() {
+        stopFlag = true;
     }
 }
