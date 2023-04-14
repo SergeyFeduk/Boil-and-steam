@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-    [field: SerializeField] public PlayerController controller { get; private set; }
-    [field: SerializeField] public Inventory inventory { get; private set; }
+    [field: SerializeField] public PlayerController Controller { get; private set; }
+    [field: SerializeField] public PlayerInteractor interactor { get; private set; }
     public static Player inst { get; private set; }
     private void Awake() {
 
@@ -14,4 +14,5 @@ public class Player : MonoBehaviour {
             inst = this;
         }
     }
+    
 }
