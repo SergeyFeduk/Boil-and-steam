@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1584
     height: 841
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Project
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 18
+  controlID: 111
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -94,8 +94,8 @@ MonoBehaviour:
     y: 0
     width: 300
     height: 546
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 19
+  controlID: 41
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 20
+  controlID: 42
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -317,22 +317,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Game/Player
+    - Assets/Game/Player/Hand
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Game/Player
+  - Assets/Game/Player/Hand
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\email\Documents\GitHub\Boil-and-steam
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 3a6c0000
-    m_LastClickedID: 27706
-    m_ExpandedIDs: 00000000b46a0000306c0000366c000000ca9a3b
+    m_SelectedIDs: 986c0000
+    m_LastClickedID: 27800
+    m_ExpandedIDs: 000000000a6b00000c6b00008a6c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -360,7 +360,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000b46a0000
+    m_ExpandedIDs: 000000000a6b00000c6b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -404,7 +404,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 11}
+      m_ClientGUIView: {fileID: 5}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -488,9 +488,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 986c0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 28f4ffffe2f7ffff1efbffff
+      m_ExpandedIDs: 28fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -805,9 +805,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.06742352, y: -0.34835404, z: 0.07242255}
+    m_Target: {x: -0.5491619, y: 1.7016928, z: 0.034623608}
     speed: 2
-    m_Value: {x: -0.06742352, y: -0.34835404, z: 0.07242255}
+    m_Value: {x: -0.5491619, y: 1.7016928, z: 0.034623608}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -857,9 +857,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 2.748299
+    m_Target: 6.528187
     speed: 2
-    m_Value: 2.748299
+    m_Value: 6.528187
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -947,8 +947,8 @@ MonoBehaviour:
     m_VAllowExceedBaseRangeMin: 1
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
-    m_HSlider: 0
-    m_VSlider: 0
+    m_HSlider: 1
+    m_VSlider: 1
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
@@ -961,18 +961,18 @@ MonoBehaviour:
       y: 21
       width: 908
       height: 504
-    m_Scale: {x: 0.46666667, y: 0.46666667}
-    m_Translation: {x: 454, y: 252}
+    m_Scale: {x: 1.6006256, y: 1.6006255}
+    m_Translation: {x: 473.51056, y: 259.09595}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -972.8571
-      y: -540
-      width: 1945.7142
-      height: 1080
+      x: -295.82843
+      y: -161.87169
+      width: 567.2782
+      height: 314.8769
     m_MinimalGUI: 1
   m_defaultScale: 0.46666667
   m_LastWindowPixelSize: {x: 908, y: 525}
