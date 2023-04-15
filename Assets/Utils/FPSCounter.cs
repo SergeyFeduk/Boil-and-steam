@@ -4,24 +4,13 @@ using UnityEngine;
 using TMPro;
 
 public class FPSCounter : MonoBehaviour {
-    [SerializeField] private bool display;
+    [SerializeField] private bool isDisplayed;
     [SerializeField] private int samples;
     [SerializeField] private TMP_Text text;
     private int[] buffer;
     private int bufferIndex;
 
-    private void Update() {
-        if (!display) {
-            text.gameObject.SetActive(false);
-            return;
-        }
-        if (buffer == null || samples != buffer.Length) {
-            InitBuffer();
-        }
-        text.gameObject.SetActive(true);
-        UpdateBuffer();
-        UpdateText(CalculateFramerate());
-    }
+    #region BufferManagement
 
     private void InitBuffer() {
         if (samples <= 0) { samples = 1; }
@@ -33,6 +22,8 @@ public class FPSCounter : MonoBehaviour {
         buffer[bufferIndex++] = (int)(1f / Time.unscaledDeltaTime);
         bufferIndex %= samples;
     }
+
+    #endregion
 
     private (int min, int avg, int max) CalculateFramerate() {
         int sum = 0;
@@ -53,5 +44,18 @@ public class FPSCounter : MonoBehaviour {
 
     private void UpdateText((int min, int avg, int max) fps) {
         text.SetText(string.Format("Avg:{0}\nMin:{1}\nMax:{2}", fps.avg, fps.min, fps.max));
+    }
+
+    private void Update() {
+        if (!isDisplayed) {
+            text.gameObject.SetActive(false);
+            return;
+        }
+        if (buffer == null || samples != buffer.Length) {
+            InitBuffer();
+        }
+        text.gameObject.SetActive(true);
+        UpdateBuffer();
+        UpdateText(CalculateFramerate());
     }
 }

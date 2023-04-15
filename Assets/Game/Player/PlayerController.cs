@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
     private const float minimalAcceptableVelocity = 0.01f;
 
     [Header("Movement")]
@@ -28,10 +25,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementDirection, frictionAmount;
     private Vector2 targetSpeed, actualForce, delta;
     private float stamina;
-
-    void Update() {
-        HandleMovement();
-    }
 
     private void HandleMovement() {
         movementDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
@@ -67,5 +60,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start() {
         stamina = maxStamina;
+    }
+    private void Update() {
+        HandleMovement();
     }
 }

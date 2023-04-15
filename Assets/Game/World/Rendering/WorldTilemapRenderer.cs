@@ -1,6 +1,4 @@
-using System;
 using System.Threading.Tasks;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +8,7 @@ public enum TileSprite {
     DryGrass,
     Dirt
 }
+
 [System.Serializable]
 public struct TileGraphic {
     public TileSprite name;
@@ -20,67 +19,73 @@ public struct TileGraphic {
 [RequireComponent(typeof(MeshFilter))]
 public class WorldTilemapRenderer : MonoBehaviour {
     private Vector2 chunkOffset = new Vector2(0.5f, 0.5f);
-
     [SerializeField] private List<TileGraphic> tileGraphic = new List<TileGraphic>();
     [SerializeField] private Vector2Int tilemapSize;
-    [SerializeField] private bool async;
+    [SerializeField] private bool runAsync;
     private Mesh mesh;
     private Mesh swapMesh;
-    int qid = 0;
+    int asyncMeshId = 0;
     private MeshFilter meshFilter => GetComponent<MeshFilter>();
 
-    private void Awake() {
-        mesh = MeshUtils.CreateMesh();
-        swapMesh = MeshUtils.CreateMesh();
-        meshFilter.mesh = mesh;
-    }
-
     public async void UpdateMesh(List<Chunk> chunks) {
-        if (async) {
-            qid = Mathf.Abs(qid - 1);
-            Mesh workingMesh = qid == 0 ? mesh : swapMesh;
+        if (runAsync) {
+            asyncMeshId = Mathf.Abs(asyncMeshId - 1);
+            Mesh workingMesh = asyncMeshId == 0 ? mesh : swapMesh;
             workingMesh.Clear();
-            (Vector3[] verticies, int[] triangles, Vector2[] uvs) targetMesh = await Task.Run(() => Work(workingMesh, chunks));
-            workingMesh.vertices = targetMesh.verticies;
-            workingMesh.triangles = targetMesh.triangles;
-            workingMesh.uv = targetMesh.uvs;
+            (Vector3[] vertices, int[] triangles, Vector2[] uvs) = await Task.Run(() => AsyncMeshUpdate(chunks));
+            SetMeshArrays(workingMesh, vertices, triangles, uvs);
             meshFilter.mesh = workingMesh;
             return;
         }
-        NormalUpdate(chunks);
+        NormalMeshUpdate(chunks);
     }
 
-    private void NormalUpdate(List<Chunk> chunks) {
+    #region MeshUpdate
+    private void NormalMeshUpdate(List<Chunk> chunks) {
         mesh.Clear();
-        MeshUtils.CreateMeshArrays(chunks.Count * GlobalSettings.inst.main.chunkSize * GlobalSettings.inst.main.chunkSize, out Vector3[] verticies, out int[] triangles, out Vector2[] uvs);
+        MeshUtils.CreateMeshArrays(chunks.Count * GlobalSettings.inst.main.chunkSize * GlobalSettings.inst.main.chunkSize,
+            out Vector3[] vertices, out int[] triangles, out Vector2[] uvs);
         int index = 0;
         for (int i = 0; i < chunks.Count; i++) {
             chunks[i].ForEachCell((cell) => {
-                Vector2 cellSize = Vector2.one * GlobalSettings.inst.main.cellSize;
-                Vector2 cellPosition = cell.address.AsVector() + cellSize * 0.5f + GlobalSettings.inst.main.cellSize * GlobalSettings.inst.main.chunkSize * (chunks[i].GetAddress().AsVector() - chunkOffset);
-                TileGraphic graphic = tileGraphic.Find(i => i.name == cell.tile);
-                MeshUtils.AddToMeshArrays(verticies, triangles, uvs, index, cellPosition, 0, cellSize, (Vector2)graphic.uv0Pos / tilemapSize, (Vector2)graphic.uv1Pos / tilemapSize);
-                index++;
+                AddCellToMesh(cell, chunks[i], ref index, ref vertices, ref triangles, ref uvs);
             });
         }
-        mesh.vertices = verticies;
-        mesh.triangles = triangles;
-        mesh.uv = uvs;
+        SetMeshArrays(mesh, vertices, triangles, uvs);
     }
 
-    private async Task<(Vector3[] verticies, int[] triangles, Vector2[] uvs)> Work(Mesh workingMesh, List<Chunk> chunks) {
-        MeshUtils.CreateMeshArrays(chunks.Count * GlobalSettings.inst.main.chunkSize * GlobalSettings.inst.main.chunkSize, out Vector3[] verticies, out int[] triangles, out Vector2[] uvs);
+    private async Task<(Vector3[] vertices, int[] triangles, Vector2[] uvs)> AsyncMeshUpdate(List<Chunk> chunks) {
+        MeshUtils.CreateMeshArrays(chunks.Count * GlobalSettings.inst.main.chunkSize * GlobalSettings.inst.main.chunkSize,
+            out Vector3[] vertices, out int[] triangles, out Vector2[] uvs);
         int index = 0;
         for (int i = 0; i < chunks.Count; i++) {
             chunks[i].ForEachCell((cell) => {
-                Vector2 cellSize = Vector2.one * GlobalSettings.inst.main.cellSize;
-                Vector2 cellPosition = cell.address.AsVector() + cellSize * 0.5f + GlobalSettings.inst.main.cellSize * GlobalSettings.inst.main.chunkSize * (chunks[i].GetAddress().AsVector() - chunkOffset);
-                TileGraphic graphic = tileGraphic.Find(i => i.name == cell.tile);
-                MeshUtils.AddToMeshArrays(verticies, triangles, uvs, index, cellPosition, 0, cellSize, (Vector2)graphic.uv0Pos / tilemapSize, (Vector2)graphic.uv1Pos / tilemapSize);
-                index++;
+                AddCellToMesh(cell, chunks[i], ref index, ref vertices, ref triangles, ref uvs);
             });
             await Task.Yield();
         }
-        return (verticies,triangles, uvs);
+        return (vertices, triangles, uvs);
+    }
+
+    private void AddCellToMesh(Cell cell, Chunk chunk, ref int index, ref Vector3[] vertices, ref int[] triangles, ref Vector2[] uvs) {
+        Vector2 cellSize = Vector2.one * GlobalSettings.inst.main.cellSize;
+        Vector2 cellPosition = cell.address.AsVector() + cellSize * 0.5f + GlobalSettings.inst.main.cellSize * GlobalSettings.inst.main.chunkSize
+        * (chunk.GetAddress().AsVector() - chunkOffset);
+        TileGraphic graphic = tileGraphic.Find(i => i.name == cell.tile);
+        MeshUtils.AddToMeshArrays(vertices, triangles, uvs, index, cellPosition, 0, cellSize,
+            (Vector2)graphic.uv0Pos / tilemapSize, (Vector2)graphic.uv1Pos / tilemapSize);
+        index++;
+    }
+
+    private void SetMeshArrays(Mesh mesh, Vector3[] vertices, int[] triangles, Vector2[] uvs) {
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.uv = uvs;
+    }
+    #endregion
+
+    private void Awake() {
+        mesh = MeshUtils.CreateMesh(); swapMesh = MeshUtils.CreateMesh();
+        meshFilter.mesh = mesh;
     }
 }

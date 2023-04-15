@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GlobalSettings
   m_EditorClassIdentifier: 
   <loadedChunksRect>k__BackingField: {x: 20, y: 14}
-  <chunkSize>k__BackingField: 13
+  <chunkSize>k__BackingField: 7
   <cellSize>k__BackingField: 1

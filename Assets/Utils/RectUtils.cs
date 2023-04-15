@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class RectUtils {
+
+    #region Getters
     public static Vector2 GetSize(this RectTransform source) => source.rect.size;
     public static float GetWidth(this RectTransform source) => source.rect.size.x;
     public static float GetHeight(this RectTransform source) => source.rect.size.y;
+    #endregion
 
+    #region Setters
     public static void SetSize(this RectTransform source, RectTransform toCopy)
     {
         source.SetSize(toCopy.GetSize());
@@ -32,4 +34,5 @@ public static class RectUtils {
     {
         source.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
     }
+    #endregion
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d422c7e3f17ae46aeffe989aff4077, type: 3}
   m_Name: PlayerWalking
   m_EditorClassIdentifier: 
-  FPS: 15
+  FPS: 10
   Frames:
   - {fileID: 1771541393, guid: c30be7ecfc38f1742a16f25d17270e56, type: 3}
   - {fileID: -1158983019, guid: c30be7ecfc38f1742a16f25d17270e56, type: 3}

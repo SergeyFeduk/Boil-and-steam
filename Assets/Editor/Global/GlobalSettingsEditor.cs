@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(GlobalSettingsSO),true)]
+[CustomEditor(typeof(GlobalSettingsSO), true)]
 public class GlobalSettingsSOEditor : Editor {
-    private static readonly string[] dontIncludeMe = new string[] { "m_Script" };
     public override void OnInspectorGUI() {
         serializedObject.Update();
         EditorGUI.BeginChangeCheck();
@@ -16,13 +13,12 @@ public class GlobalSettingsSOEditor : Editor {
 }
 
 [CustomEditor(typeof(GlobalSettings))]
-public class GlobalSettingsEditor : Editor
-{
+public class GlobalSettingsEditor : Editor {
     private Editor editor;
     public override void OnInspectorGUI() {
         serializedObject.Update();
         var main = serializedObject.FindProperty("main");
-
+        //Add check if main is null
         CreateCachedEditor(main.objectReferenceValue, null, ref editor);
         GUIStyle style = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter };
         EditorGUI.LabelField(EditorGUILayout.GetControlRect(false, 20), "Main", style);
@@ -32,7 +28,6 @@ public class GlobalSettingsEditor : Editor
         EditorGUILayout.Space();
 
         editor.OnInspectorGUI();
-        
         serializedObject.ApplyModifiedProperties();
     }
 }

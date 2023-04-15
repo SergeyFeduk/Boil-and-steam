@@ -6,6 +6,8 @@ public class Timer
     private float timeLeft;
     private float initialTime;
     private bool independentTimeScale;
+
+    #region Constructors
     public Timer() { }
     public Timer(float time) {
         SetTime(time);
@@ -14,6 +16,7 @@ public class Timer
         SetTime(time);
         MakeIndependent(independent);
     }
+    #endregion
 
     #region Setters
     public void SetTime(float time) {
@@ -30,6 +33,7 @@ public class Timer
     }
     #endregion
 
+    #region Executors
     public bool Execute() {
         if (timeLeft <= 0) return true;
         timeLeft -= independentTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
@@ -39,6 +43,7 @@ public class Timer
         routine.Invoke(this);
         return !Execute();
     }
+    #endregion
 
     #region Getters
     public float GetTimeLeft() {

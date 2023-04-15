@@ -313,7 +313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 273723984}
-  - component: {fileID: 273723983}
+  - component: {fileID: 273723985}
   m_Layer: 0
   m_Name: Settings
   m_TagString: Untagged
@@ -321,19 +321,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &273723983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 273723982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 467ed4d53e82214459004f6b88f6bfcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  main: {fileID: 11400000, guid: 0417b871aac4e0a4195dfcf6fea3a76d, type: 2}
 --- !u!4 &273723984
 Transform:
   m_ObjectHideFlags: 0
@@ -349,6 +336,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &273723985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273723982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467ed4d53e82214459004f6b88f6bfcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  main: {fileID: 11400000, guid: 0417b871aac4e0a4195dfcf6fea3a76d, type: 2}
 --- !u!1 &525525772
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,7 +627,7 @@ MonoBehaviour:
     uv0Pos: {x: 0, y: 14}
     uv1Pos: {x: 14, y: 28}
   tilemapSize: {x: 42, y: 42}
-  async: 0
+  runAsync: 0
 --- !u!33 &952649799
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -768,7 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba397c93ab37444ebed119485ddb7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  display: 1
+  isDisplayed: 1
   samples: 100
   text: {fileID: 188168992}
 --- !u!4 &1252694889
@@ -859,7 +859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c659ec1a3de43444b7099fe55764f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Controller>k__BackingField: {fileID: 1404366832}
+  <controller>k__BackingField: {fileID: 0}
   <interactor>k__BackingField: {fileID: 1404366836}
 --- !u!50 &1404366834
 Rigidbody2D:
@@ -911,7 +911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <interactionRadius>k__BackingField: 1
-  exampleEntity: {fileID: 5071210258193303862, guid: 60ab56a2e97003a4f8dd37090445a236, type: 3}
+  exampleEntity: {fileID: 3706965720943631831, guid: b155397fe9bbb034c84be2ba437e686e, type: 3}
 --- !u!114 &1404366837
 MonoBehaviour:
   m_ObjectHideFlags: 0
