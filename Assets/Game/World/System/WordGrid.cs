@@ -1,11 +1,9 @@
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WordGrid 
 {
-    //Stores only loaded chunks
     public Dictionary<Address, Chunk> grid = new Dictionary<Address, Chunk>();
     public Dictionary<Address, Chunk> unloadedGrid = new Dictionary<Address, Chunk>();
 
@@ -42,8 +40,6 @@ public class WordGrid
                            Mathf.FloorToInt((worldPosition.y + 0.5f) / GlobalSettings.inst.main.cellSize));
     }
 
-    /// <param name="cellAddress">Global cell address</param>
-    /// <returns>Global chunk address</returns>
     public Address GetChunkAddress(Address cellAddress) {
         return new Address(Mathf.RoundToInt(cellAddress.x / (float)GlobalSettings.inst.main.chunkSize), Mathf.RoundToInt(cellAddress.y / (float)GlobalSettings.inst.main.chunkSize));
     }
@@ -68,7 +64,6 @@ public class WordGrid
         unloadedGrid.Remove(address);
         grid.Add(address, chunk);
         chunk.Load();
-        //Debug.Log("Loaded chunk at: "+address);
         return chunk;
     }
 
@@ -100,5 +95,4 @@ public class WordGrid
         return chunk;
     }
 
-    
 }

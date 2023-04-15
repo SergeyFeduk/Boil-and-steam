@@ -1,16 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Chunk {
-    private bool isLoaded;
     private Cell[,] cells;
     private Address address;
     private ChunkDynamicData cdd;
 
     public void Init(Address address) {
-        isLoaded = true;
         this.address = address;
         int chunkSize = GlobalSettings.inst.main.chunkSize;
         cdd = new ChunkDynamicData();
@@ -34,24 +30,6 @@ public class Chunk {
 
     public ChunkDynamicData GetCDD() {
         return cdd;
-    }
-
-    public void Unload() {
-        isLoaded = false;
-        cdd.Unload();
-        /*cdd.ForEachEntity((entity)=> {
-            entity.GetComponent<IUnloadable>()?.Unloaded(Time.time);
-            entity.Decompose();
-        });*/
-    }
-
-    public void Load() {
-        isLoaded = true;
-        cdd.Load();
-        /*cdd.ForEachEntity((entity) => {
-            Entity createdEntity = World.inst.entityManager.InstantiateEntity(entity);
-            createdEntity.GetComponent<IUnloadable>()?.Loaded(Time.time);
-        });*/
     }
 
     public Cell GetCellAtGlobal(Address globalAddress) {
@@ -78,4 +56,13 @@ public class Chunk {
         }
     }
 
+    public void Unload()
+    {
+        cdd.Unload();
+    }
+
+    public void Load()
+    {
+        cdd.Load();
+    }
 }

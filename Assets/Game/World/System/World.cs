@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class World : MonoBehaviour
@@ -9,23 +7,6 @@ public class World : MonoBehaviour
     public EntityManager entityManager { get; private set; }
     public WorldGenerator worldGenerator { get; private set; }
     [field: SerializeField] public WorldTilemapRenderer worldTilemapRenderer { get; private set; }
-
-    public void Save() {
-        throw new System.NotImplementedException();
-    }
-
-    public void Load() {
-        throw new System.NotImplementedException();
-    }
-
-    private void Init() {
-        grid = new WordGrid();
-        grid.Init(worldTilemapRenderer);
-        entityManager = new EntityManager();
-        worldGenerator = new WorldGenerator();
-        grid.GetOrGenerateChunk(0, 0);
-        grid.GetOrGenerateChunk(-1, -1);
-    }
 
     private void Awake() {
 
@@ -39,6 +20,15 @@ public class World : MonoBehaviour
     private void Start() {
         Init();
     }
+    private void Init()
+    {
+        grid = new WordGrid();
+        grid.Init(worldTilemapRenderer);
+        entityManager = new EntityManager();
+        worldGenerator = new WorldGenerator();
+        grid.GetOrGenerateChunk(0, 0);
+        grid.GetOrGenerateChunk(-1, -1);
+    }
 
     private void Update() {
         worldGenerator.Update();
@@ -47,6 +37,5 @@ public class World : MonoBehaviour
     private void OnDrawGizmosSelected() {
         if (grid == null) return;
         grid.DrawGizmos();
-        //worldGenerator.DrawGizmos();
     }
 }

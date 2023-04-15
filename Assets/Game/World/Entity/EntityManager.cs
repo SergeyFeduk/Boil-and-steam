@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityManager 
 {
-    private List<Entity> entities = new List<Entity>();
+    private readonly List<Entity> entities = new List<Entity>();
 
     public Entity InstantiateEntityAt(Address address, Entity entityPrefab) {
         Entity entity = InstantiateEntity(entityPrefab);
@@ -25,9 +24,5 @@ public class EntityManager
     public void DecomposeEntity(Entity entity) {
         entities.Remove(entity);
         Object.Destroy(entity.gameObject);
-    }
-
-    public void DestroyEntity(Entity entity) {
-        entity.Decompose();
     }
 }
