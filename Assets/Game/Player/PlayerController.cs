@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
-    private const float minimalAcceptableVelocity = 0.01f;
 
     [Header("Movement")]
     [SerializeField] private float walkSpeed;
@@ -28,25 +27,25 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleMovement() {
         movementDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        bool isRunning = Input.GetKey(KeyCode.LeftShift) && movementDirection.sqrMagnitude >= minimalAcceptableVelocity;
+        bool isRunning = Input.GetKey(KeyCode.LeftShift) && movementDirection.sqrMagnitude >= Player.minimalAcceptableVelocity;
         stamina = Mathf.Clamp(stamina + (isRunning ? -staminaConsumption * Time.deltaTime : staminaRegeneration * Time.deltaTime), 0, maxStamina);
         staminaSlider.value = stamina / maxStamina;
         targetSpeed = movementDirection * ((stamina > 0 && isRunning) ? runSpeed : walkSpeed);
         #region Acceleration&Deceleration
         delta = targetSpeed - physicalBody.velocity;
         Vector2 accelerationRate = new Vector2(
-            Mathf.Abs(targetSpeed.x) >= minimalAcceptableVelocity ? acceleration : deceleration,
-            Mathf.Abs(targetSpeed.y) >= minimalAcceptableVelocity ? acceleration : deceleration);
+            Mathf.Abs(targetSpeed.x) >= Player.minimalAcceptableVelocity ? acceleration : deceleration,
+            Mathf.Abs(targetSpeed.y) >= Player.minimalAcceptableVelocity ? acceleration : deceleration);
         actualForce = new Vector2(
             Mathf.Pow(Mathf.Abs(delta.x) * accelerationRate.x, inertia) * Mathf.Sign(delta.x),
             Mathf.Pow(Mathf.Abs(delta.y) * accelerationRate.y, inertia) * Mathf.Sign(delta.y));
         #endregion
         #region Friction
         float frictionX = 0, frictionY = 0;
-        if (Mathf.Abs(movementDirection.x) <= minimalAcceptableVelocity) {
+        if (Mathf.Abs(movementDirection.x) <= Player.minimalAcceptableVelocity) {
             frictionX = Mathf.Min(Mathf.Abs(physicalBody.velocity.x), Mathf.Abs(friction));
         }
-        if (Mathf.Abs(movementDirection.y) <= minimalAcceptableVelocity) {
+        if (Mathf.Abs(movementDirection.y) <= Player.minimalAcceptableVelocity) {
             frictionY = Mathf.Min(Mathf.Abs(physicalBody.velocity.y), Mathf.Abs(friction));
         }
         frictionAmount = new Vector2(frictionX, frictionY) * physicalBody.velocity.normalized;

@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0d422c7e3f17ae46aeffe989aff4077, type: 3}
-  m_Name: PlayerStanding
+  m_Script: {fileID: 11500000, guid: d46e5d105db14e049b0441c2925e00c1, type: 3}
+  m_Name: NoneHand
   m_EditorClassIdentifier: 
-  FPS: 4
-  Frames:
-  - {fileID: -1813335352, guid: c30be7ecfc38f1742a16f25d17270e56, type: 3}
-  - {fileID: -1713241723, guid: c30be7ecfc38f1742a16f25d17270e56, type: 3}

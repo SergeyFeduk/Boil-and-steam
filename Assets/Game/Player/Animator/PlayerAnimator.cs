@@ -1,41 +1,37 @@
 using UnityEngine;
-using System.Threading.Tasks;
 
 public class PlayerAnimator : MonoBehaviour {
-    private const float minimalAcceptableVelocity = 0.01f;
-    [SerializeField] private AnimationSO standingAnimation, walkingAnimation;
-    private SpriteRenderer spriteRenderer => GetComponent<SpriteRenderer>();
-    private AnimationSO currentAnimation;
-    private Timer timer = new Timer();
-    private bool stopFlag;
-
-    private void Update() {
+    [field: SerializeField] public  BodyAnimator bodyAnimator { get; private set; }
+    [field: SerializeField] public HandsAnimator handsAnimator { get; private set; }
+    private bool isRight = true;
+    private bool isMoving = false;
+    public void Start()
+    {
+        handsAnimator.ChangeState(HandsAnimator.States.BareHands); //потом перенести
+        bodyAnimator.InvokeStanding();
+        handsAnimator.InvokeStanding();
+    }
+    public void Update()
+    {
         Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if ((movement.x > minimalAcceptableVelocity && spriteRenderer.flipX) || (movement.x < -minimalAcceptableVelocity && !spriteRenderer.flipX)) {
-            spriteRenderer.flipX = !spriteRenderer.flipX;
+        if ((transform.InverseTransformPoint(ScreenUtils.WorldMouse()).x > 0 && !isRight) || (transform.InverseTransformPoint(ScreenUtils.WorldMouse()).x <= 0 - Player.minimalAcceptableVelocity && isRight))
+        {
+            handsAnimator.Flip();
+            bodyAnimator.Flip();
+            isRight = !isRight;
         }
-        bool isMoving = Mathf.Abs(movement.x) > minimalAcceptableVelocity || Mathf.Abs(movement.y) > minimalAcceptableVelocity;
-        AnimationSO targetAnimationSO = isMoving ? walkingAnimation : standingAnimation;
-        if (currentAnimation != targetAnimationSO) {
-            ChangeAnimation(targetAnimationSO);
+        bool isMovingNow = Mathf.Abs(movement.x) > Player.minimalAcceptableVelocity || Mathf.Abs(movement.y) > Player.minimalAcceptableVelocity;
+        if(!isMovingNow && isMoving)
+        {
+            isMoving = false;
+            bodyAnimator.InvokeStanding();
+            handsAnimator.InvokeStanding();
         }
-    }
-    private void ChangeAnimation(AnimationSO anim) {
-        currentAnimation = anim;
-        FrameSetter(anim, 0);
-    }
-    private async void FrameSetter(AnimationSO myanim, int currentframe) {
-        timer.SetFrequency(myanim.FPS);
-        spriteRenderer.sprite = myanim.Frames[currentframe];
-        while (!timer.Execute()) {
-            if (myanim != currentAnimation || stopFlag) return;
-            await Task.Yield();
+        else if(isMovingNow && !isMoving)
+        {
+            isMoving = true;
+            bodyAnimator.InvokeWalking();
+            handsAnimator.InvokeWalking();
         }
-        currentframe++;
-        currentframe %= currentAnimation.Frames.Count;
-        FrameSetter(myanim, currentframe);
-    }
-    private void OnApplicationQuit() {
-        stopFlag = true;
     }
 }

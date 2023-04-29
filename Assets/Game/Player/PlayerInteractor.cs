@@ -9,13 +9,15 @@ public class PlayerInteractor : MonoBehaviour {
     #region Handlers
 
     private void HandleClick() {
-        if (ScreenUtils.IsMouseOverUI()) return;
+        if (ScreenUtils.IsMouseOverUI() || !IsInInteractionRange()) return;
         if (Input.GetMouseButtonDown(0)) {
             if (builder.isInBuildMode) {
                 builder.HandleBuilding();
+                Player.inst.animator.handsAnimator.InvokeActive(ScreenUtils.WorldMouse()); //потом перенести когда надо
                 return;
             }
             HandleAction();
+            
         }
         if (Input.GetKeyDown(KeyCode.E)) {
             HandleInteraction();
