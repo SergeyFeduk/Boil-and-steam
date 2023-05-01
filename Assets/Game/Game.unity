@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <worldTilemapRenderer>k__BackingField: {fileID: 952649798}
+  entityMaterial: {fileID: 2100000, guid: a65f055029ec37848bc88c9f5e861d68, type: 2}
 --- !u!4 &205549114
 Transform:
   m_ObjectHideFlags: 0
@@ -859,7 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c659ec1a3de43444b7099fe55764f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <controller>k__BackingField: {fileID: 0}
+  <controller>k__BackingField: {fileID: 1404366832}
   <interactor>k__BackingField: {fileID: 1404366836}
 --- !u!50 &1404366834
 Rigidbody2D:
@@ -911,7 +912,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <interactionRadius>k__BackingField: 1
-  exampleEntity: {fileID: 3706965720943631831, guid: b155397fe9bbb034c84be2ba437e686e, type: 3}
+  wallSprite: {fileID: 21300000, guid: e3fe73b1ecc40b14cb2ff14c194ce92e, type: 3}
+  bsop: {fileID: 11400000, guid: 4882d159bec2e3a4c99c4a37c9ca7b05, type: 2}
+  spritep: {fileID: 21300000, guid: e3fe73b1ecc40b14cb2ff14c194ce92e, type: 3}
 --- !u!114 &1404366837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1023,8 +1026,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c86121a0da9e934eaf473505e600253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Standing: {fileID: 11400000, guid: ecf2d433c9f28334cbe849bedce0c93f, type: 2}
-  Walking: {fileID: 11400000, guid: 457b192c9b93f1645b12e694bf7838b0, type: 2}
+  standingAnimation: {fileID: 11400000, guid: ecf2d433c9f28334cbe849bedce0c93f, type: 2}
+  walkingAnimation: {fileID: 11400000, guid: 457b192c9b93f1645b12e694bf7838b0, type: 2}
 --- !u!1 &6235897497172477888
 GameObject:
   m_ObjectHideFlags: 0

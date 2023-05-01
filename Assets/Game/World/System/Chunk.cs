@@ -55,14 +55,4 @@ public class Chunk {
             }
         }
     }
-
-    public void Unload()
-    {
-        cdd.Unload();
-    }
-
-    public void Load()
-    {
-        cdd.Load();
-    }
 }

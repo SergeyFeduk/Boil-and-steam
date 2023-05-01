@@ -44,10 +44,6 @@ public class WordGrid
         return new Address(Mathf.RoundToInt(cellAddress.x / (float)GlobalSettings.inst.main.chunkSize), Mathf.RoundToInt(cellAddress.y / (float)GlobalSettings.inst.main.chunkSize));
     }
 
-    public void PlaceEntityAt(Address address, Entity entity) {
-        World.inst.entityManager.InstantiateEntityAt(address, entity);
-    }
-
     public Cell GetCellAt(Address address) {
         Chunk chunk = GetOrGenerateChunkAtCell(address);
         return chunk.GetCellAtGlobal(address);
@@ -55,15 +51,16 @@ public class WordGrid
 
     public void UnloadChunk(Address address) {
         Chunk chunk = GetChunk(address);
-        chunk.Unload();
+        World.inst.entityManager.loader.UnloadChunk(chunk);
         unloadedGrid.Add(address, chunk);
         grid.Remove(address);
     }
+
     private Chunk LoadChunk(Address address) {
         Chunk chunk = unloadedGrid[address];
         unloadedGrid.Remove(address);
         grid.Add(address, chunk);
-        chunk.Load();
+        World.inst.entityManager.loader.LoadChunk(chunk);
         return chunk;
     }
 
