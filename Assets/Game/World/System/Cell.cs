@@ -1,7 +1,7 @@
 public class Cell 
 {
     public Address address { get; private set; }
-    public IPositioned entity { get; private set; }
+    public Positioned positioned { get; private set; }
     public bool occupied { get; private set; }
     public TileSprite tile { get; private set; }
 

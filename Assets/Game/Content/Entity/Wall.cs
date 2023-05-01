@@ -1,13 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[System.Serializable]
+public class Wall : Entity{
 
-public class Wall : Entity, IBuildable, IPositioned {
-    [field: SerializeField] public BuildRequirementsSO requirements { get; set; }
-    public Address origin { get; set; }
-    public List<Address> occupiedPositions { get; set; }
-    [field: SerializeField] public Vector2Int size { get; set; }
+    public Wall() {
+        components = new Dictionary<System.Type, Component>();
+        AddComponent(typeof(Buildable));
+        AddComponent(typeof(Renderable));
+        AddComponent(typeof(Positioned));
+    }
+
     public override void Init() {
-        
+        base.Init();
     }
 }

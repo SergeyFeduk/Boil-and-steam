@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <worldTilemapRenderer>k__BackingField: {fileID: 952649798}
+  entityMaterial: {fileID: 2100000, guid: a65f055029ec37848bc88c9f5e861d68, type: 2}
 --- !u!4 &205549114
 Transform:
   m_ObjectHideFlags: 0
@@ -453,7 +454,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.20754719, g: 0.18144196, b: 0.1791563, a: 0}
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -798,7 +799,6 @@ GameObject:
   - component: {fileID: 1404366833}
   - component: {fileID: 1404366832}
   - component: {fileID: 1404366837}
-  - component: {fileID: 1404366838}
   - component: {fileID: 1404366836}
   - component: {fileID: 1404366835}
   - component: {fileID: 1404366834}
@@ -823,7 +823,6 @@ Transform:
   m_Children:
   - {fileID: 787948648}
   - {fileID: 2028610118}
-  - {fileID: 2008378464}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -861,9 +860,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c659ec1a3de43444b7099fe55764f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <controller>k__BackingField: {fileID: 0}
+  <controller>k__BackingField: {fileID: 1404366832}
   <interactor>k__BackingField: {fileID: 1404366836}
-  <animator>k__BackingField: {fileID: 1404366838}
 --- !u!50 &1404366834
 Rigidbody2D:
   serializedVersion: 4
@@ -913,8 +911,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e003d4fd127a6364289b3e8ff91c6656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <interactionRadius>k__BackingField: 7
-  exampleEntity: {fileID: 3706965720943631831, guid: b155397fe9bbb034c84be2ba437e686e, type: 3}
+  <interactionRadius>k__BackingField: 1
+  wallSprite: {fileID: 21300000, guid: e3fe73b1ecc40b14cb2ff14c194ce92e, type: 3}
+  bsop: {fileID: 11400000, guid: 4882d159bec2e3a4c99c4a37c9ca7b05, type: 2}
+  spritep: {fileID: 21300000, guid: e3fe73b1ecc40b14cb2ff14c194ce92e, type: 3}
 --- !u!114 &1404366837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -929,67 +929,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <maxHealth>k__BackingField: 100
   healthSlider: {fileID: 0}
---- !u!114 &1404366838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1404366830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c86121a0da9e934eaf473505e600253, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <bodyAnimator>k__BackingField: {fileID: 2028610120}
-  <handsAnimator>k__BackingField: {fileID: 2008378465}
---- !u!1 &2008378463
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2008378464}
-  - component: {fileID: 2008378465}
-  m_Layer: 0
-  m_Name: Hands
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2008378464
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2008378463}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1404366831}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2008378465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2008378463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96bca5b1250c5c64cbbcda6ec355fe11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animations:
-  - {fileID: 11400000, guid: 00ed990aaae3ba0458b3ccb0db64215c, type: 2}
-  - {fileID: 11400000, guid: e33b8bbd0ebd3e340a6469b53706004a, type: 2}
 --- !u!1 &2028610117
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,10 +938,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2028610118}
-  - component: {fileID: 2028610120}
   - component: {fileID: 2028610119}
+  - component: {fileID: 2028610120}
   m_Layer: 0
-  m_Name: Body
+  m_Name: Appearance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1017,7 +956,7 @@ Transform:
   m_GameObject: {fileID: 2028610117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1404366831}
@@ -1084,7 +1023,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2028610117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841910e1615f4cf4ba20fea6f61ad714, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c86121a0da9e934eaf473505e600253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   standingAnimation: {fileID: 11400000, guid: ecf2d433c9f28334cbe849bedce0c93f, type: 2}

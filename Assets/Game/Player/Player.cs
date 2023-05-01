@@ -15,5 +15,4 @@ public class Player : MonoBehaviour {
             inst = this;
         }
     }
-    
 }

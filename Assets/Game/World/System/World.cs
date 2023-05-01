@@ -7,6 +7,28 @@ public class World : MonoBehaviour
     public EntityManager entityManager { get; private set; }
     public WorldGenerator worldGenerator { get; private set; }
     [field: SerializeField] public WorldTilemapRenderer worldTilemapRenderer { get; private set; }
+    [SerializeField] private Material entityMaterial;
+
+    private void Init()
+    {
+        grid = new WordGrid();
+        grid.Init(worldTilemapRenderer);
+        entityManager = new EntityManager();
+        entityManager.Init();
+        entityManager.SetRendererMaterial(entityMaterial);
+        worldGenerator = new WorldGenerator();
+    }
+
+    private void Update() {
+        worldGenerator.Update();
+    }
+    private void LateUpdate() {
+        entityManager.Update();
+    }
+
+    private void Start() {
+        Init();
+    }
 
     private void Awake() {
 
@@ -15,23 +37,6 @@ public class World : MonoBehaviour
         } else {
             inst = this;
         }
-    }
-
-    private void Start() {
-        Init();
-    }
-    private void Init()
-    {
-        grid = new WordGrid();
-        grid.Init(worldTilemapRenderer);
-        entityManager = new EntityManager();
-        worldGenerator = new WorldGenerator();
-        grid.GetOrGenerateChunk(0, 0);
-        grid.GetOrGenerateChunk(-1, -1);
-    }
-
-    private void Update() {
-        worldGenerator.Update();
     }
 
     private void OnDrawGizmosSelected() {
