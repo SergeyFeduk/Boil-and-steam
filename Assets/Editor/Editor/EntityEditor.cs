@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -6,14 +7,15 @@ using UnityEditor;
 
 public class EntityEditor : EditorWindow {
     //Get this into standalone class
+    Color outline = new Color(0.2f, 0.2f, 0.2f, 1f);
+    Color darkBackground = new Color(0.102f, 0.102f, 0.102f);
     Color background = new Color(0.15f, 0.15f, 0.15f, 1f);
-    Color outline = new Color(0.15f, 0.15f, 0.15f, 1f);
 
     private readonly EntitySerializer serializer = new EntitySerializer();
 
     private string path;
+    private Type selectedType;
     private Entity entity;
-    private string data;
 
     [MenuItem("Window/Entity editor")]
     static void StaticInit() {
@@ -48,31 +50,29 @@ public class EntityEditor : EditorWindow {
         float offset = 10;
         float inspectorSize = 300;
         float previewSize = Mathf.Min(Screen.width - 2 * offset, Screen.width - inspectorSize);
-        FileDragAndDrop(offset, previewSize);
-
-        /*EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Entity name: ", GUILayout.MaxWidth(100));
-        EditorGUILayout.TextField("");
-        EditorGUILayout.EndHorizontal();*/
-
-        Rect previewRect = new Rect(offset, 2 * offset + 20, previewSize, previewSize);
-        Handles.DrawSolidRectangleWithOutline(previewRect, background, outline);
-    }
-
-    private void FileDragAndDrop(float offset, float previewSize) {
-        Event currentEvent = Event.current;
+        float bottomOffset = offset * 2 + 40;
         float saveButtonSize = 60;
 
-        Rect dropArea = new Rect(offset, offset, previewSize - 2 * saveButtonSize - 2 * offset, 20);
-        Handles.DrawSolidRectangleWithOutline(dropArea, background, outline);
-        GUI.Label(dropArea, path ?? "None");
+        TopMenu(offset, previewSize, saveButtonSize);
+        BottomMenu(bottomOffset, offset, previewSize, saveButtonSize);
+
+        Rect previewRect = new Rect(offset, 2 * offset + 20, previewSize, previewSize);
+        Handles.DrawSolidRectangleWithOutline(previewRect, darkBackground, outline);
+    }
+
+    private void TopMenu(float offset, float previewSize, float saveButtonSize) {
+        Event currentEvent = Event.current;
+        
+
+        Rect pathArea = new Rect(offset, offset, previewSize - saveButtonSize - offset, 20);
+        Handles.DrawSolidRectangleWithOutline(pathArea, background, outline);
+        GUI.Label(pathArea, path ?? "None");
         if (GUI.Button(new Rect(previewSize - saveButtonSize + offset, offset, saveButtonSize, 20), "Save")) {
             SaveEntity();
         }
-        if (GUI.Button(new Rect(previewSize - 2 * saveButtonSize, offset, saveButtonSize, 20), "Load")) {
-            LoadEntity();
-        }
+        Handles.DrawSolidRectangleWithOutline(new Rect(previewSize + 2 * offset, 0, 2, Screen.height), darkBackground, outline);
 
+        Rect dropArea = new Rect(0, 0, Screen.width, Screen.height);
         switch (currentEvent.type) {
             case EventType.DragUpdated:
             case EventType.DragPerform:
@@ -81,23 +81,39 @@ public class EntityEditor : EditorWindow {
                 DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
                 if (currentEvent.type == EventType.DragPerform) {
                     DragAndDrop.AcceptDrag();
-                    Object dragged_object = DragAndDrop.objectReferences[0];
-                    path = AssetDatabase.GetAssetPath(dragged_object);
+                    UnityEngine.Object dragged_object = DragAndDrop.objectReferences[0];
+                    HandlePath(AssetDatabase.GetAssetPath(dragged_object));
                 }
                 break;
         }
     }
 
-    private void LoadEntity() {
-        object obj = serializer.Deserialize(data);
+    private void BottomMenu(float bottomOffset, float offset, float previewSize, float saveButtonSize) {
+        Handles.DrawSolidRectangleWithOutline(new Rect(0, Screen.height - bottomOffset, previewSize + 2 * offset, 2), darkBackground, outline);
+        Rect typeSelectorArea = new Rect(offset, Screen.height + offset - bottomOffset, previewSize - saveButtonSize - offset, 20);
+        Handles.DrawSolidRectangleWithOutline(typeSelectorArea, background, outline);
+        GUI.Label(typeSelectorArea, selectedType == null ? "None" : selectedType.ToString());
+        if (GUI.Button(new Rect(previewSize - saveButtonSize + offset, Screen.height + offset - bottomOffset, saveButtonSize, 20), "Create")) {
+            //SaveEntity();
+        }
+    }
+
+    private void HandlePath(string newPath) {
+        if (newPath.Substring(newPath.LastIndexOf('.') + 1) != "entity") return;
+        path = newPath;
+        //LoadEntity();
+    }
+
+    private void LoadEntity(string data) {
+        /*object obj = serializer.Deserialize(data);
         Wall wallObj = (Wall)obj;
         Renderable renderable = wallObj.GetComponent<Renderable>();
         Buildable buildable = wallObj.GetComponent<Buildable>();
         Positioned positioned = wallObj.GetComponent<Positioned>();
         Debug.Log(buildable.requirements.name);
         Debug.Log(renderable.sprite.name);
-        
-        
+
+
         Debug.Log(positioned.origin);
         Debug.Log(renderable.ySorted);
         Debug.Log(wallObj.rotation);
@@ -105,10 +121,10 @@ public class EntityEditor : EditorWindow {
         List<Address> adlist = positioned.occupiedPositions;
         for (int i = 0; i < adlist.Count; i++) {
             Debug.Log(adlist[i]);
-        }
+        }*/
     }
     private void SaveEntity() {
-        data = serializer.Serialize(entity);
-        Debug.Log(data);
+        //data = serializer.Serialize(entity);
+        //Debug.Log(data);
     }
 }

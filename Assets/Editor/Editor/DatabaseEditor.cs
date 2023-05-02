@@ -70,7 +70,9 @@ public class DatabaseEditor : EditorWindow {
         if (Event.current.type == EventType.MouseMove && pathRect.Contains(Event.current.mousePosition)) {
             EditorGUIUtility.AddCursorRect(SceneView.lastActiveSceneView.position, MouseCursor.Arrow);
         }
-        if (GUI.Button(pathButtonRect, database[index], LabelButtonStyle())) {
+        int maxPathLength = 53;
+        string pathText = database[index].Length <= maxPathLength ? database[index] : database[index].Substring(0, maxPathLength) + "...";
+        if (GUI.Button(pathButtonRect, pathText, LabelButtonStyle())) {
             Object obj = AssetDatabase.LoadAssetAtPath(database[index], typeof(Object));
             Selection.activeObject = obj;
         }

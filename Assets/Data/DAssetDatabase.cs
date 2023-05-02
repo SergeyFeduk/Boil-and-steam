@@ -67,13 +67,13 @@ public class DAssetDatabase : AssetPostprocessor {
     public static T GetAssetByKey<T>(int key) where T : UnityEngine.Object {
         LoadDatabase();
         string path = database[key];
-        UnityEngine.Object[] objects = AssetDatabase.LoadAllAssetsAtPath(path);
+        UnityEngine.Object[] objects = LoadAllAssetsAtPath(path);
         return objects[0] as T;
     }
     public static object GetAssetByKey(int key) {
         LoadDatabase();
         string path = database[key];
-        UnityEngine.Object[] objects = AssetDatabase.LoadAllAssetsAtPath(path);
+        UnityEngine.Object[] objects = LoadAllAssetsAtPath(path);
         return objects[0];
     }
 
@@ -129,6 +129,7 @@ public class DAssetDatabase : AssetPostprocessor {
             HandleObjectsAddition(importedAssets, i);
         }
         for (int i = 0; i < deletedAssets.Length; i++) {
+            if (!database.ContainsValue(deletedAssets[i])) continue;
             int key = database.First(v => v.Value == deletedAssets[i]).Key;
             database.Remove(key);
         }
@@ -136,7 +137,7 @@ public class DAssetDatabase : AssetPostprocessor {
     }
 
     private static void HandleObjectsAddition(string[] importedAssets, int index) {
-        UnityEngine.Object[] objects = AssetDatabase.LoadAllAssetsAtPath(importedAssets[index]);
+        UnityEngine.Object[] objects = LoadAllAssetsAtPath(importedAssets[index]);
         for (int i = 0; i < objects.Length; i++) {
             UnityEngine.Object asset = objects[i];
             HandleAsset(asset.GetType(), importedAssets[index], false);
@@ -163,21 +164,25 @@ public class DAssetDatabase : AssetPostprocessor {
         if (!Directory.Exists(Application.persistentDataPath + "/database")) {
             Directory.CreateDirectory(Application.persistentDataPath + "/database");
         }
+        DAssetSaveData saveData = new DAssetSaveData(database, maxKey);
+
         FileStream file = File.Create(GetPath());
-        formatter.Serialize(file, database);
+        formatter.Serialize(file, saveData);
         file.Close();
     }
 
     private static void LoadDatabase() {
         if (!File.Exists(GetPath())) {
-            Clear();
+            database.Clear();
             return;
         }
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream file = File.Open(GetPath(), FileMode.Open);
         try {
-            object dictionary = formatter.Deserialize(file);
-            database = dictionary as Dictionary<int, string>;
+            object saveDataObj = formatter.Deserialize(file);
+            DAssetSaveData saveData = saveDataObj as DAssetSaveData;
+            database = saveData.database;
+            maxKey = saveData.key;
             file.Close();
         } catch {
             Debug.LogError("Failed to load asset database");
@@ -227,4 +232,22 @@ public class DAssetDatabase : AssetPostprocessor {
         return (assets,paths);
     }
     #endregion
+
+    [Serializable]
+    private class DAssetSaveData {
+        public Dictionary<int, string> database;
+        public int key;
+        public DAssetSaveData(Dictionary<int, string> database, int key) {
+            this.database = database;
+            this.key = key;
+        }
+    }
+
+    //Put this in utils
+    public static UnityEngine.Object[] LoadAllAssetsAtPath(string assetPath) {
+        return typeof(SceneAsset).Equals(AssetDatabase.GetMainAssetTypeAtPath(assetPath)) ?
+            // prevent error "Do not use readobjectthreaded on scene objects!"
+            new[] { AssetDatabase.LoadMainAssetAtPath(assetPath) } :
+            AssetDatabase.LoadAllAssetsAtPath(assetPath);
+    }
 }
