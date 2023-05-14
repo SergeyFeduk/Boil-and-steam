@@ -13,18 +13,18 @@ public class InventoryPanel : MonoBehaviour
     {
         for (int i = 0; i < Slots.Count; i++)
         {
-            Slots[i].PanelUpdateItem(Player.inst.inventory.myItems[i]);
+            Slots[i].PanelUpdateItem(Player.inst.inventory.inventory.myItems[i]);
         }
     }
     private void UpdateInventoryFromSlots()
     {
         List<Item> items = new List<Item>();
         foreach (InventorySlot slot in Slots) items.Add(slot.item);
-        Player.inst.inventory.UpdateItemsFromSlots(items);
+        Player.inst.inventory.inventory.UpdateItemsFromSlots(items);
     }
     private void OnEnable()
     {
-        PlayerInventory.InventoryChanged += UpdateSlotsFromInventory;
+        Player.inst.inventory.inventory.InventoryChanged += UpdateSlotsFromInventory;
         foreach(InventorySlot slot in Slots)
         {
             slot.SlotItemChanged += UpdateInventoryFromSlots;
@@ -32,7 +32,7 @@ public class InventoryPanel : MonoBehaviour
     }
     private void OnDisable()
     {
-        PlayerInventory.InventoryChanged -= UpdateSlotsFromInventory;
+        Player.inst.inventory.inventory.InventoryChanged -= UpdateSlotsFromInventory;
         foreach (InventorySlot slot in Slots)
         {
             slot.SlotItemChanged -= UpdateInventoryFromSlots;

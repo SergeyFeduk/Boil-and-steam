@@ -18,7 +18,6 @@ public class ContextCanvasManager : MonoBehaviour
     }
     public bool CheckPanel(string name)
     {
-        name = name + "(Clone)";
         for (int i = 0; i < transform.childCount;i++)
         {
             if (transform.GetChild(i).name == name) return true;
@@ -28,12 +27,12 @@ public class ContextCanvasManager : MonoBehaviour
     public void CreatePanel(GameObject obj)
     {
         GameObject o = Instantiate(obj,transform);
+        o.name = obj.name;
         o.transform.SetParent(transform);
         o.transform.localScale = Vector3.one;
     }
     public void DestroyPanel(string name)
     {
-        name = name + "(Clone)";
         for (int i = 0; i < transform.childCount; i++)
         {
             if (transform.GetChild(i).name == name)

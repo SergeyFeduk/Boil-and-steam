@@ -15,7 +15,6 @@ public class DraggablePanelEdge : MonoBehaviour
     public void StartMove()
     {
         panel.SetAsLastSibling();
-        print(panel.parent.name);
         offset = (Vector2)panel.InverseTransformPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         MovePanel();
     }
