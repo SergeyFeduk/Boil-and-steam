@@ -1347,7 +1347,6 @@ GameObject:
   - component: {fileID: 1404366831}
   - component: {fileID: 1404366833}
   - component: {fileID: 1404366837}
-  - component: {fileID: 1404366838}
   - component: {fileID: 1404366836}
   - component: {fileID: 1404366832}
   - component: {fileID: 1404366835}
@@ -1413,7 +1412,7 @@ MonoBehaviour:
   <controller>k__BackingField: {fileID: 1404366832}
   <interactor>k__BackingField: {fileID: 1404366836}
   <animator>k__BackingField: {fileID: 2028610120}
-  <inventory>k__BackingField: {fileID: 1404366838}
+  <inventory>k__BackingField: {fileID: 0}
 --- !u!50 &1404366834
 Rigidbody2D:
   serializedVersion: 4
