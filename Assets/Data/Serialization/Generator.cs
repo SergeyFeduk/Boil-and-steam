@@ -85,8 +85,12 @@ class Generator {
             propertyInfo.SetValue(typedObject, null, null);
         } else {
             int key = int.Parse(valueNode.value);
-            object obj = DAssetDatabase.GetAssetByKey(key);
-            propertyInfo.SetValue(typedObject, obj, null);
+            object[] objects = DAssetDatabase.GetAssetsByKey(key);
+            for (int i = 0; i < objects.Length; i++) {
+                if (objects[i].GetType() == propertyInfo.PropertyType) {
+                    propertyInfo.SetValue(typedObject, objects[i], null);
+                }
+            }
         }
         
     }

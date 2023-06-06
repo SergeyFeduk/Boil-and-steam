@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Entity : ICloneable {
+    public string name { get; set; }
+    public Sprite icon { get; set; }
     public Vector2 position { get; set; }
     public float rotation { get; set; }
     public Vector2 scale { get; set; }
@@ -35,6 +37,7 @@ public class Entity : ICloneable {
         position = Vector2.zero;
         rotation = 0;
         scale = Vector2.one;
+        name = "";
     }
 
     public virtual void Decompose() {

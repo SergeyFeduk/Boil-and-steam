@@ -1,4 +1,6 @@
 using System;
+using UnityEngine;
+using UnityEditor;
 
 [Serializable]
 public class Component : ICloneable {

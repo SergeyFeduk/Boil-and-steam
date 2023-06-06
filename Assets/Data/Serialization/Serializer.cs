@@ -45,6 +45,7 @@ public class Serializer {
 
     private void HandleValueSerialization(SerializationBlock block) {
         var memoryStream = new MemoryStream();
+        if (block.propValue == null) throw new Exception(block.info.Name + " is null and cannot be serialized!");
         using (memoryStream) {
             binaryFormatter.Serialize(memoryStream, block.propValue);
         }

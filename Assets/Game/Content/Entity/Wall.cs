@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 [System.Serializable]
 public class Wall : Entity{
-
     public Wall() {
         components = new Dictionary<System.Type, Component>();
         AddComponent(typeof(Buildable));
@@ -12,5 +12,7 @@ public class Wall : Entity{
 
     public override void Init() {
         base.Init();
+        GetComponent<Positioned>().origin = new Address();
+        GetComponent<Positioned>().occupiedPositions = new List<Address>() {};
     }
 }

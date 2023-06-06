@@ -15,6 +15,7 @@ public class EntityRenderer {
 
     public void AddRenderable(Renderable renderable) {
         renderables.Add(renderable);
+        renderable.RecalculateVisualSize();
         sortBeforeRender = true;
     }
 
@@ -36,8 +37,7 @@ public class EntityRenderer {
             mpb.SetTexture("_MainTex", renderable.sprite.texture);
             Vector2 offset = new Vector2(0, renderable.sprite.pivot.y / renderable.sprite.rect.height) * renderable.visualSize;
             Matrix4x4 TRS = Matrix4x4.TRS(entity.position - entity.scale - offset , Quaternion.Euler(0, 0, entity.rotation), renderable.visualSize);
-
-            Graphics.DrawMesh(quadMesh, TRS, material, 0, ScreenUtils.cam, 0, mpb);
+            DrawQueue.inst.Queue(new SingleRenderQueue(TRS, (int)entity.position.y, mpb, material));
         }
     }
 

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f12f08507d9a84bbf6a6b92624134d, type: 3}
+  m_Name: StructureSubmenu
+  m_EditorClassIdentifier: 
+  <label>k__BackingField: Structure
+  <icon>k__BackingField: {fileID: 21300000, guid: 19370790a791d4fc99ee3830251366f8, type: 3}
+  <entityFiles>k__BackingField:
+  - {fileID: 3716057256541908232, guid: 148bb3c40c5d1c44d83cc8d915e087df, type: 3}

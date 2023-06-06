@@ -15,7 +15,7 @@ public class DAssetDatabase : AssetPostprocessor {
     private static readonly List<Type> referenceTypes = new List<Type>() {
         typeof(ScriptableObject),
         typeof(Sprite),
-        typeof(Texture2D),
+        //typeof(Texture2D),
     };
     private static readonly string[] assetsFolders = new[] { "Assets/Data", "Assets/Game", "Assets/Editor", "Assets/Utils" };
     #region Editor
@@ -70,6 +70,14 @@ public class DAssetDatabase : AssetPostprocessor {
         UnityEngine.Object[] objects = LoadAllAssetsAtPath(path);
         return objects[0] as T;
     }
+
+    public static object[] GetAssetsByKey(int key) {
+        LoadDatabase();
+        string path = database[key];
+        UnityEngine.Object[] objects = LoadAllAssetsAtPath(path);
+        return objects;
+    }
+
     public static object GetAssetByKey(int key) {
         LoadDatabase();
         string path = database[key];

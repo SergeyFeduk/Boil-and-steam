@@ -1,28 +1,35 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerInteractor : MonoBehaviour {
     [field: SerializeField] public float interactionRadius { get; private set; }
-    [SerializeField] private Sprite wallSprite;
-    public BuildRequirementsSO bsop;
-    public static BuildRequirementsSO bso;
-    public Sprite spritep;
-    public static Sprite sprite;
+    [Header("Builder")]
+    [SerializeField] private Material blueprintMaterial;
+    [SerializeField] private float blueprintSnapSpeed;
+    [SerializeField] private Color normalBlueprintColor;
+    [SerializeField] private Color redBlueprintColor;
+    [SerializeField] private Address address;
     private readonly Builder builder = new Builder();
 
-    private void OnValidate() {
-        bso = bsop;
-        sprite = spritep;
+    public void SetBuilderEntity(Entity entity) {
+        builder.SetEntity(entity);
+    }
+
+    public void SubscribeOnBuildModeChange(UnityAction<bool> call) {
+        builder.changedBuildMode.AddListener(call);
     }
 
     #region Handlers
 
     private void HandleClick() {
-        if (ScreenUtils.IsMouseOverUI() || !IsInInteractionRange()) return;
+        if (ScreenUtils.IsMouseOverUI() || !IsAddressInInteractionRange()) return;
         if (Input.GetMouseButtonDown(0)) {
             if (builder.isInBuildMode) {
-                builder.HandleBuilding();
-                Player.inst.animator.handsAnimator.InvokeActive(ScreenUtils.WorldMouse()); //потом перенести когда надо
+                if (builder.HandleBuilding()) {
+                    Player.inst.animator.handsAnimator.InvokeActive(ScreenUtils.WorldMouse());
+                }
                 return;
             }
             HandleAction();
@@ -34,7 +41,7 @@ public class PlayerInteractor : MonoBehaviour {
     }
 
     private void HandleAction() {
-        if (!IsInInteractionRange()) return;
+        if (!IsAddressInInteractionRange()) return;
         List<GameObject> hitObjects = ScreenUtils.GetObjectsUnderMouse();
         for (int i = 0; i < hitObjects.Count; i++) {
             //May replace with responsibility chain
@@ -42,7 +49,7 @@ public class PlayerInteractor : MonoBehaviour {
     }
 
     private void HandleInteraction() {
-        if (!IsInInteractionRange()) return;
+        if (!IsAddressInInteractionRange()) return;
         List<GameObject> hitObjects = ScreenUtils.GetObjectsUnderMouse();
         for (int i = 0; i < hitObjects.Count; i++) {
             Interactable interactable = hitObjects[i].GetComponent<Interactable>();
@@ -52,22 +59,20 @@ public class PlayerInteractor : MonoBehaviour {
 
     #endregion
 
-    private bool IsInInteractionRange() {
+    public bool IsAddressInInteractionRange() {
+        return Vector2.Distance(transform.position, World.inst.grid.GetAddressAtWorld(ScreenUtils.WorldMouse()).AsVector()) <= interactionRadius;
+    }
+
+    public bool IsInInteractionRange() {
         return Vector2.Distance(transform.position, ScreenUtils.WorldMouse()) <= interactionRadius;
     }
 
-    private void Update() {
+    private void LateUpdate() {
         HandleClick();
+        builder.Update();
     }
 
-    private void Start() {
-        Wall exampleEntity = new Wall();
-        Renderable renderable = exampleEntity.GetComponent<Renderable>();
-        Positioned positioned = exampleEntity.GetComponent<Positioned>();
-        renderable.sprite = wallSprite;
-        positioned.size = new Vector2Int(1,1);
-        renderable.visualSize = new Vector2(1, wallSprite.rect.size.y / wallSprite.rect.size.x);
-        builder.SetEntity(exampleEntity);
-        builder.Init();
+    private void Awake() {
+        builder.Init(blueprintMaterial, blueprintSnapSpeed, normalBlueprintColor, redBlueprintColor);
     }
 }

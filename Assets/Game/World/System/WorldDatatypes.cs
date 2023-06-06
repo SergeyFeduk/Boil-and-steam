@@ -1,50 +1,22 @@
 using System;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Reflection;
 using System.ComponentModel;
 using UnityEngine;
-/*
-public class AddressConverter : TypeConverter {
-    public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) {
-        return sourceType == typeof(string);
-    }
+using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine.UIElements;
 
-    public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) {
-        var name = value as string;
-        int index = 0;
-        int x = 0;
-        int y = 0;
-        char currentChar;
-        while (index < name.Length) {
-            currentChar = name[index];
-            if (currentChar == '(') {
-                //Parse till ':'
-                string xStr = "";
-                while (currentChar != ':') {
-                    index++;
-                    currentChar = name[index];
-                    xStr += currentChar;
-                }
-                x = int.Parse(xStr);
-                //Parse till ')'
-                string yStr = "";
-                while (currentChar != ')') {
-                    index++;
-                    currentChar = name[index];
-                    yStr += currentChar;
-                }
-                y = int.Parse(yStr);
-            }
-            index++;
-        }
-        return new Address(x, y);
-    }
-}*/
-
-//[ TypeConverter(typeof(AddressConverter))]
 [Serializable]
-public struct Address {
+public class Address {
     public int x;
     public int y;
+    public Address() {
+        x = 0;
+        y = 0;
+    }
+
     public Address(int x, int y) {
         this.x = x;
         this.y = y;
@@ -118,8 +90,38 @@ public struct Address {
             return hash;
         }
     }
+
+}
+[CustomPropertyDrawer(typeof(Address))]
+public class AddressDrawer : PropertyDrawer {
+    public override VisualElement CreatePropertyGUI(SerializedProperty property) {
+        var container = new VisualElement();
+        container.style.justifyContent = Justify.SpaceBetween;
+        container.style.flexDirection = FlexDirection.Row;
+        Label label = new Label(((GenericProperty)property.serializedObject.targetObject).Name);
+        PropertyField xField = new PropertyField(property.FindPropertyRelative("x"),"");
+        PropertyField yField = new PropertyField(property.FindPropertyRelative("y"),"");
+        xField.style.flexGrow = new StyleFloat(800);
+        xField.style.width = container.style.width.value.value / 2 - 5;
+        yField.style.flexGrow = new StyleFloat(800);
+        yField.style.width = container.style.width.value.value / 2 - 5;
+        container.Add(label);
+        container.Add(xField);
+        container.Add(yField);
+        return container;
+    }
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+        EditorGUI.BeginProperty(position, label, property);
+        position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+        Rect xRect = new Rect(position.x, position.y, position.width / 2 - 5, position.height);
+        Rect yRect = new Rect(position.x + position.width / 2, position.y, position.width / 2 - 5, position.height);
+        EditorGUI.PropertyField(xRect, property.FindPropertyRelative("x"), GUIContent.none);
+        EditorGUI.PropertyField(yRect, property.FindPropertyRelative("y"), GUIContent.none);
+        EditorGUI.EndProperty();
+    }
 }
 
+//Get this somewhere else
 public class Vector2IntSerializationSurrogate : ISerializationSurrogate {
     public void GetObjectData(object obj, SerializationInfo info, StreamingContext context) {
         Vector2Int v3 = (Vector2Int)obj;
@@ -147,4 +149,9 @@ public class Vector2SerializationSurrogate : ISerializationSurrogate {
         obj = v3;
         return obj;
     }
+}
+// Should be somewhere else
+public class GenericProperty : ScriptableObject {
+    [SerializeReference] public object property;
+    [SerializeReference] public string Name;
 }
