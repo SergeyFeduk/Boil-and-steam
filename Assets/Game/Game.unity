@@ -1348,6 +1348,7 @@ GameObject:
   - component: {fileID: 1404366833}
   - component: {fileID: 1404366837}
   - component: {fileID: 1404366836}
+  - component: {fileID: 1404366838}
   - component: {fileID: 1404366832}
   - component: {fileID: 1404366835}
   - component: {fileID: 1404366834}
@@ -1412,7 +1413,7 @@ MonoBehaviour:
   <controller>k__BackingField: {fileID: 1404366832}
   <interactor>k__BackingField: {fileID: 1404366836}
   <animator>k__BackingField: {fileID: 2028610120}
-  <inventory>k__BackingField: {fileID: 0}
+  <inventory>k__BackingField: {fileID: 1404366838}
 --- !u!50 &1404366834
 Rigidbody2D:
   serializedVersion: 4
@@ -1484,6 +1485,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <maxHealth>k__BackingField: 100
   healthSlider: {fileID: 0}
+--- !u!114 &1404366838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404366830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08f44ef2947ac443b1a363ffbd31ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 4339322090352591666, guid: 5cb3aa4a0bfdcbb408c258bb74b6e7df, type: 3}
 --- !u!1 &1442408572
 GameObject:
   m_ObjectHideFlags: 0
