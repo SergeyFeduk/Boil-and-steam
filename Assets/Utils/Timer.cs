@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Timer 
+public class Timer
 {
     private float timeLeft;
     private float initialTime;
@@ -9,48 +9,58 @@ public class Timer
 
     #region Constructors
     public Timer() { }
-    public Timer(float time) {
+    public Timer(float time)
+    {
         SetTime(time);
     }
-    public Timer(float time, bool independent) {
+    public Timer(float time, bool independent)
+    {
         SetTime(time);
         MakeIndependent(independent);
     }
     #endregion
 
     #region Setters
-    public void SetTime(float time) {
+    public void SetTime(float time)
+    {
         timeLeft = time;
         initialTime = time;
     }
 
-    public void SetFrequency(float time) {
+    public void SetFrequency(float time)
+    {
         timeLeft = 1 / time;
+        initialTime = 1 / time;
     }
 
-    public void MakeIndependent(bool independent) {
+    public void MakeIndependent(bool independent)
+    {
         independentTimeScale = independent;
     }
     #endregion
 
     #region Executors
-    public bool Execute() {
+    public bool Execute()
+    {
         if (timeLeft <= 0) return true;
         timeLeft -= independentTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
         return false;
     }
-    public bool ExecuteRoutine(Action<Timer> routine) {
+    public bool ExecuteRoutine(Action<Timer> routine)
+    {
         routine.Invoke(this);
         return !Execute();
     }
     #endregion
 
     #region Getters
-    public float GetTimeLeft() {
-        return timeLeft;
+    public float GetTimeLeft()
+    {
+        return Mathf.Max(timeLeft, 0.0f);
     }
-    public float GetTimePassed() {
-        return initialTime - timeLeft;
+    public float GetTimePassed()
+    {
+        return initialTime - GetTimeLeft();
     }
     #endregion
 }

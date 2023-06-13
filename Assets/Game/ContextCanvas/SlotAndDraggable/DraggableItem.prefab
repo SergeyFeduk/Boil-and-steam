@@ -229,6 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 2333088636150371153}
   text: {fileID: 2333088634729107482}
+  asset: {fileID: 3716057256541908232, guid: ac347e8261cd0844b9140cd51e8e105e, type: 3}
   myItem:
     data: {fileID: 0}
     count: 0

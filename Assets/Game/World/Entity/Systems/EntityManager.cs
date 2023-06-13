@@ -5,8 +5,24 @@ public class EntityManager {
     private readonly List<Entity> entities = new List<Entity>();
     public EntityRenderer renderer { get; private set; }
     public EntityLoader loader { get; private set; }
+    public WorldItemManager worldItemManager { get; private set; }
+    /*
+    private Dictionary <Type,Action<Entity>> componentToSystemDictionary;
+    private void Awake()
+    {
+        componentToSystemDictionary.Add(typeof(Renderable), renderer.AddRenderable);
+    }
+     */
+    public void Init()
+    {
+        renderer = new EntityRenderer();
+        renderer.Init();
+        loader = new EntityLoader();
+        worldItemManager = new WorldItemManager();
+    }
     public void Update() {
         renderer.Render();
+        worldItemManager.Update();
     }
 
     public Entity InstantiateEntityAt(Address address, Entity entityPrefab, bool clone) {
@@ -33,13 +49,10 @@ public class EntityManager {
     public void DecomposeEntity(Entity entity) {
         entities.Remove(entity);
         Renderable renderable = entity.GetComponent<Renderable>();
-        if (renderable != null) renderer.RemoveRenderable(renderable);
-    }
-
-    public void Init() {
-        renderer = new EntityRenderer();
-        renderer.Init();
-        loader = new EntityLoader();
+        CIndependentRenderable iRenderable = entity.GetComponent<CIndependentRenderable>();
+        if (renderable != null || iRenderable != null) renderer.RemoveRenderable(entity);
+        CWorldItem worldItem = entity.GetComponent<CWorldItem>();
+        if (worldItem != null) worldItemManager.RemoveWorldItem(entity);
     }
 
     public void SetRendererMaterial(Material material) {
@@ -49,9 +62,9 @@ public class EntityManager {
     private void PassEntity(Entity entity) {
         entities.Add(entity);
         Renderable renderable = entity.GetComponent<Renderable>();
-        if (renderable == null) { Debug.Log(renderable + " is null!"); }
-        if (renderable != null) renderer.AddRenderable(renderable);
+        CIndependentRenderable iRenderable = entity.GetComponent<CIndependentRenderable>();
+        if (renderable != null || iRenderable != null) renderer.AddRenderable(entity);
+        CWorldItem worldItem = entity.GetComponent<CWorldItem>();
+        if (worldItem != null) worldItemManager.AddWorldItem(entity);
     }
-
-
 }

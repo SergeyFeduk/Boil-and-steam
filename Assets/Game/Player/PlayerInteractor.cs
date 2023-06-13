@@ -26,12 +26,12 @@ public class PlayerInteractor : MonoBehaviour {
     private void HandleClick() {
         if (ScreenUtils.IsMouseOverUI() || !IsAddressInInteractionRange()) return;
         if (Input.GetMouseButtonDown(0)) {
-            if (builder.isInBuildMode) {
-                if (builder.HandleBuilding()) {
+            //if (builder.isInBuildMode) {
+                //if (builder.HandleBuilding()) {
                     Player.inst.animator.handsAnimator.InvokeActive(ScreenUtils.WorldMouse());
-                }
-                return;
-            }
+                //}
+                //return;
+            //} Хочу, чтобы махал руками постоянно >:)
             HandleAction();
             
         }

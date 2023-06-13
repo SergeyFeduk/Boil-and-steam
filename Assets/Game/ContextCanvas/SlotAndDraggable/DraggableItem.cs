@@ -7,6 +7,7 @@ public class DraggableItem : MonoBehaviour
 {
     [SerializeField] private Image image;
     [SerializeField] private TMPro.TextMeshProUGUI text;
+
     private RectTransform rect;
 
     private bool inMouseControl = false;
@@ -15,6 +16,7 @@ public class DraggableItem : MonoBehaviour
 
     private RaycastHit hit;
     private Ray MyRay;
+
     public void Start()
     {
         rect = GetComponent<RectTransform>();
@@ -31,8 +33,12 @@ public class DraggableItem : MonoBehaviour
 
         if (!inMouseControl)
         {
-            if (!isSwapped) transform.GetComponentInParent<InventorySlot>().ChangeItem(Item.itemNull);
+            Transform parent = transform.parent;
             transform.SetParent(MouseInventoryObjectController.inst.transform, false);
+            if (!isSwapped)
+            {
+                parent.GetComponent<InventorySlot>().SetInventoryObject(null);
+            }
             ControlPosition();
             inMouseControl = true;
         }
@@ -42,7 +48,7 @@ public class DraggableItem : MonoBehaviour
             if (!BetterIsMouseOverUI())
             {
                 stopFlag = true;
-                print("Я выкинул предмет на пол!");
+                WorldItemThrower.inst.ThrowItems(myItem);
                 Destroy(gameObject);
             }
             else if (obj == null) return;

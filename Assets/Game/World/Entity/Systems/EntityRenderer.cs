@@ -13,14 +13,29 @@ public class EntityRenderer {
         this.material = material;
     }
 
-    public void AddRenderable(Renderable renderable) {
+    public void AddRenderable(Entity entity) {
+        Renderable renderable = entity.GetComponent<Renderable>();
         renderables.Add(renderable);
+        CIndependentRenderable iRenderable = entity.GetComponent<CIndependentRenderable>();
+        if(iRenderable != null)
+        {
+            renderables.Add(iRenderable);
+            iRenderable.RecalculateVisualSize();
+        }
         renderable.RecalculateVisualSize();
         sortBeforeRender = true;
     }
 
-    public void RemoveRenderable(Renderable renderable) {
+
+    public void RemoveRenderable(Entity entity) {
+        Renderable renderable = entity.GetComponent<Renderable>();
         renderables.Remove(renderable);
+        sortBeforeRender = true;
+        CIndependentRenderable iRenderable = entity.GetComponent<CIndependentRenderable>();
+        if (iRenderable != null)
+        {
+            renderables.Remove(iRenderable);
+        }
         sortBeforeRender = true;
     }
 
@@ -29,15 +44,10 @@ public class EntityRenderer {
             RegenerateSortedRenderables();
             sortBeforeRender = false;
         }
-        MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+        
         for (int i = 0; i < renderables.Count; i++) {
             Renderable renderable = renderables[i];
-            Entity entity = renderable.entity;
-
-            mpb.SetTexture("_MainTex", renderable.sprite.texture);
-            Vector2 offset = new Vector2(0, renderable.sprite.pivot.y / renderable.sprite.rect.height) * renderable.visualSize;
-            Matrix4x4 TRS = Matrix4x4.TRS(entity.position - entity.scale - offset , Quaternion.Euler(0, 0, entity.rotation), renderable.visualSize);
-            DrawQueue.inst.Queue(new SingleRenderQueue(TRS, (int)entity.position.y, mpb, material));
+            renderable.Draw(material);
         }
     }
 

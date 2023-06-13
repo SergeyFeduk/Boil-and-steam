@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class PlayerInventory : MonoBehaviour
 {
+    [SerializeField] private Item StartItem;
     [SerializeField] private GameObject panel;
 
     public Inventory inventory = new Inventory(9);
@@ -22,5 +23,6 @@ public class PlayerInventory : MonoBehaviour
                 ContextCanvasManager.inst.CreatePanel(panel);
             }
         }
+        if(Input.GetKeyDown(KeyCode.P)) Player.inst.inventory.inventory.TryAddItems(StartItem);
     }
 }

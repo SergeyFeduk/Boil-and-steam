@@ -107,6 +107,7 @@ namespace DPhysics {
             manifold.a.transform.position -= manifold.a.massData.inverseMass * correction;
             manifold.b.transform.position += manifold.b.massData.inverseMass * correction;
         }
+        /*
         private void OnDrawGizmos() {
             if (a.shape == null || b.shape == null) return;
             //Gizmos.DrawCube(a.transform.position + ((AABB)a.shape).GetSize(), ((AABB)a.shape).GetSize());
@@ -130,5 +131,6 @@ namespace DPhysics {
             //Gizmos.DrawCube(b.transform.position - ((AABB)a.shape.ComputeAABB()).GetSize() / 2, ((AABB)b.shape.ComputeAABB()).GetSize());
             //Gizmos.DrawCube(c.transform.position - ((AABB)a.shape.ComputeAABB()).GetSize() / 2, ((AABB)c.shape.ComputeAABB()).GetSize());
         }
+        */
     }
 }

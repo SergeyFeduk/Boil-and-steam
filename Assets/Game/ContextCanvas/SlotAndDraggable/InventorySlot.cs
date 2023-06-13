@@ -21,7 +21,7 @@ public class InventorySlot : MonoBehaviour
             {
                 myObject = Instantiate(prefab);
                 myObject.transform.SetParent(transform, false);
-                transform.localPosition = zeroPos;
+                myObject.transform.localPosition = zeroPos;
             }
             DraggableItem obj = myObject.GetComponent<DraggableItem>();
             obj.myItem = item;
@@ -29,25 +29,26 @@ public class InventorySlot : MonoBehaviour
         }
         else if(myObject != null) Destroy(myObject);
     }
-    public void PanelUpdateItem(Item item)
+    public void PanelUpdateItem(Item aitem)
     {
-        if (this.item.data != item.data || this.item.count != item.count)
-        {
-            this.item = item;
-            UpdateUI();
-        }
+        this.item = aitem;
+        UpdateUI();
     }
-    public void ChangeItem(Item item)
+    public void ChangeItemWithoutUIUpdate(Item item)
     {
         this.item = item;
         SlotItemChanged.Invoke();
     }
     public void SetInventoryObject(GameObject obj)
     {
+        if (obj == null) item = Item.itemNull;
         myObject = obj;
-        item = obj.GetComponent<DraggableItem>().myItem;
-        obj.transform.SetParent(transform);
-        obj.transform.localPosition = zeroPos;
+        if (obj != null)
+        {
+            item = obj.GetComponent<DraggableItem>().myItem;
+            obj.transform.SetParent(transform);
+            obj.transform.localPosition = zeroPos;
+        }
         SlotItemChanged.Invoke();
         UpdateUI();
     }

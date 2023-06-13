@@ -1,7 +1,7 @@
 Wall
 
 [name : val = { AAEAAAD/////AQAAAAAAAAAGAQAAAARXYWxsCw== }]
-[icon : ref = { 0 }]
+[icon : ref = { null }]
 [position : val = { AAEAAAD/////AQAAAAAAAAAMAgAAAE1Vbml0eUVuZ2luZS5Db3JlTW9kdWxlLCBWZXJzaW9uPTAuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAE1VuaXR5RW5naW5lLlZlY3RvcjICAAAAAXgBeQAACwsCAAAAAAAAAAAAAAAL }]
 [rotation : val = { AAEAAAD/////AQAAAAAAAAAEAQAAAA1TeXN0ZW0uU2luZ2xlAQAAAAdtX3ZhbHVlAAsAAAAACw== }]
 [scale : val = { AAEAAAD/////AQAAAAAAAAAMAgAAAE1Vbml0eUVuZ2luZS5Db3JlTW9kdWxlLCBWZXJzaW9uPTAuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAE1VuaXR5RW5naW5lLlZlY3RvcjICAAAAAXgBeQAACwsCAAAAAACAPwAAgD8L }]
@@ -12,11 +12,11 @@ Wall
 		[dnumber : val = { AAEAAAD/////AQAAAAAAAAAEAQAAAA1TeXN0ZW0uRG91YmxlAQAAAAdtX3ZhbHVlAAYAAAAAAAAAAAs= }]
 		[text : val = { AAEAAAD/////AQAAAAAAAAAGAQAAAAAL }]
 		[boolean : val = { AAEAAAD/////AQAAAAAAAAAEAQAAAA5TeXN0ZW0uQm9vbGVhbgEAAAAHbV92YWx1ZQABAAs= }]
-		[requirements : ref = { 1 }]
+		[requirements : ref = { null }]
 	}]
 	[Renderable : comp = {
 		[ySorted : val = { AAEAAAD/////AQAAAAAAAAAEAQAAAA5TeXN0ZW0uQm9vbGVhbgEAAAAHbV92YWx1ZQABAQs= }]
-		[sprite : ref = { 0 }]
+		[sprite : ref = { null }]
 		[visualSize : val = { AAEAAAD/////AQAAAAAAAAAMAgAAAE1Vbml0eUVuZ2luZS5Db3JlTW9kdWxlLCBWZXJzaW9uPTAuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAE1VuaXR5RW5naW5lLlZlY3RvcjICAAAAAXgBeQAACwsCAAAAAAAAAAAAAAAL }]
 	}]
 	[Positioned : comp = {
@@ -24,4 +24,4 @@ Wall
 		[occupiedPositions: list = {}]
 		[size : val = { AAEAAAD/////AQAAAAAAAAAMAgAAAE1Vbml0eUVuZ2luZS5Db3JlTW9kdWxlLCBWZXJzaW9uPTAuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAFlVuaXR5RW5naW5lLlZlY3RvcjJJbnQCAAAAAXgBeQAACAgCAAAAAQAAAAEAAAAL }]
 	}]
-}]]
+}]

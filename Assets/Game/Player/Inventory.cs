@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+[System.Serializable]
 public class Inventory
 {
     public List<Item> myItems = new List<Item>();
@@ -38,7 +39,7 @@ public class Inventory
             {
                 return true;
             }
-            else
+            else if (myItems[i].data == item.data && (myItems[i].data.maxStack - myItems[i].count) < count)
             {
                 count -= (myItems[i].data.maxStack - myItems[i].count);
             }
@@ -72,7 +73,7 @@ public class Inventory
                     myItems[i].count -= count;
                 }
         }
-        InventoryChanged.Invoke();
+        if (InventoryChanged != null) InventoryChanged.Invoke();
         if (count != 0) Debug.Log("Кто-то забрал из инвентаря не столько, сколько надо");
     }
     public int GetItemCount(ItemData data)
@@ -89,16 +90,18 @@ public class Inventory
     }
     public int TryAddItems(Item item)
     {
+       
         int countToFit = item.count;
         for (int i = 0; i < myItems.Count; i++)
         {
             if (myItems[i].data == item.data && (myItems[i].data.maxStack - myItems[i].count) >= countToFit)
             {
                 myItems[i].count += countToFit;
-                InventoryChanged.Invoke();
+                if (InventoryChanged != null) InventoryChanged.Invoke();
                 return 0;
+                
             }
-            else
+            else if(myItems[i].data == item.data && (myItems[i].data.maxStack - myItems[i].count) < countToFit)
             {
                 countToFit -= (myItems[i].data.maxStack - myItems[i].count);
                 myItems[i].count = myItems[i].data.maxStack;
@@ -116,13 +119,13 @@ public class Inventory
                 else
                 {
                     myItems[i] = new Item(item.data, countToFit);
-                    InventoryChanged.Invoke();
+                    if(InventoryChanged != null) InventoryChanged.Invoke();
                     return 0;
                 }
             }
 
         }
-        InventoryChanged.Invoke();
+        if (InventoryChanged != null) InventoryChanged.Invoke();
         return countToFit;
     }
     public void UpdateItemsFromSlots(List<Item> items)
@@ -131,7 +134,7 @@ public class Inventory
         {
             myItems[i] = items[i];
         }
-        InventoryChanged.Invoke();
+        if (InventoryChanged != null) InventoryChanged.Invoke();
     }
 }
 class NameItemComparer : IComparer<Item>
